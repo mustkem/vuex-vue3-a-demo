@@ -1,0 +1,95 @@
+# Implement vuex #
+
+1. npm install --save vuex (as development dependency)
+
+2. src/store/store.js 
+
+    add this 
+
+        import Vue from 'vue';
+        import Vuex from 'vuex';
+
+        Vue.use(Vuex);
+
+        export default new Vuex.Store({
+    
+        });
+
+3. Create a new folder store/modules. And create a stock.js file.
+   Add data mutations actions getters in this file
+
+4. Add module in store 
+
+        import Vue from 'vue';
+        import Vuex from 'vuex';
+
+        import stocks from './modules/stocks'
+
+        Vue.use(Vuex);
+
+        export default new Vuex.Store({
+            modules : {
+                stocks
+            }
+        });
+  
+  5. intigrate this store in our app main.js file.
+
+        import Vue from 'vue'
+        import VueRouter from 'vue-router'
+        import { routes } from './routes'
+        import App from './App.vue'
+        import store from './store/store';
+
+        Vue.use(VueRouter);
+
+        const router = new VueRouter({
+        mode:'history',
+        routes
+        })
+
+        new Vue({
+        el: '#app',
+        router,
+        store,
+        render: h => h(App)
+        })
+
+
+6. Call actions in created lifecycle of any componenet.
+        created(){
+                this.$store.dispatch('initStocks');
+            }
+
+7. Now get this data in computed using getters.
+        computed:{
+                stocks(){
+                    return this.$store.getters.stocks;
+                }
+            }
+
+
+
+Two ways to call the action
+1. this.$store.getters.stocks;
+   
+   Whenever an action is called a corrosponding mutation will be called. This mutation will update the state.
+
+
+2. Get the data from store 
+    this.$store.getters.stocks
+    Here stocks is a function which is returning some data.
+    We will call this line in computed. And this computed file will add data to local state.
+
+
+************************************
+1. call init function. // app.vue
+2. get data using getters - mapGetters //stocks.vue
+3. Hit action on buy button. And add the stock to portfolio module state.stocks. //stock.vue
+4. Sell stock // hit button sell stock // portfolio/stock.vue// this action is written in portfolio.js.
+5. setdata to firebase.
+6. Load data from firebase.
+
+
+
+
